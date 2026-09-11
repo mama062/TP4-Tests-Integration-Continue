@@ -6,15 +6,27 @@ TP4, partie 2 — Test non fonctionnel de performance (chapitre 4).
 performance minimal ("smoke test") qui échoue si une régression grossière
 rend une page anormalement lente.
 
-TODO (TP4) : mesurez le temps de réponse de GET /rendezvous/ avec
-time.perf_counter() et vérifiez qu'il reste sous un seuil généreux
-(ex. 1 seconde) pour rester fiable même sur une machine chargée.
-
-Comparez avec solution/rendezvous/tests_performance.py une fois terminé.
+Seuil choisi (1 seconde) : très généreux pour une simple page de
+formulaire sans requête coûteuse, mais assez bas pour attraper une vraie
+régression (ex. une requête N+1 ajoutée par erreur) sans faire échouer le
+pipeline CI sur une machine simplement chargée.
 """
+import time
+
 from django.test import TestCase
+
+SEUIL_SECONDES = 1.0
 
 
 class PerformanceFormulaireTest(TestCase):
     def test_formulaire_repond_rapidement(self):
-        self.skipTest("TODO (TP4) : à implémenter, voir la consigne ci-dessus")
+        debut = time.perf_counter()
+        reponse = self.client.get("/rendezvous/")
+        duree = time.perf_counter() - debut
+
+        self.assertEqual(reponse.status_code, 200)
+        self.assertLess(
+            duree,
+            SEUIL_SECONDES,
+            f"GET /rendezvous/ a mis {duree:.3f}s, attendu < {SEUIL_SECONDES}s",
+        )

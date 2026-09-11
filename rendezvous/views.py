@@ -3,8 +3,6 @@ Chaque vue a une seule responsabilité : parler HTTP (lire la requête,
 rediriger, choisir un template). Validation, tarification et persistance
 sont délégués à RendezVousForm et RendezVousService (SRP, chapitre 2).
 """
-import os
-
 from django.contrib import messages
 from django.shortcuts import redirect, render
 

@@ -14,7 +14,7 @@
 
 def runCmd(String commande) {
     if (isUnix()) {
-        sh commande
+        sh "export PATH=\$PATH:/var/jenkins_home/.local/bin && ${commande}"
     } else {
         bat commande
     }

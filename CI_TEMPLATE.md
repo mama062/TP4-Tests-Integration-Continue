@@ -27,7 +27,7 @@ vrai projet en production, un webhook GitHub (Jenkins notifié à chaque
 |---|---|---|
 | Dépôt avec versioning | Respecté | Git, avec un historique de commits lisible depuis le TP1 ; dépôt distant sur GitHub. |
 | Standard de code vérifié | Respecté | `flake8` (config dans `.flake8` à la racine, `max-line-length = 100`), exécuté par le stage **Standard de code (lint)**. |
-| Serveur d'intégration continue | Respecté | Jenkins, installé en local (Docker recommandé par `INSTALLATION_JENKINS.md`). Le pipeline utilise un agent Docker (`python:3.11-slim`) : chaque exécution tourne dans un conteneur jetable, identique quel que soit l'OS de la machine qui héberge Jenkins. |
+| Serveur d'intégration continue | Respecté | Jenkins, installé en local via Docker Desktop (image `jenkins/jenkins:lts-jdk17`). Le pipeline lui-même utilise `agent any` (Python installé directement dans le conteneur Jenkins) plutôt qu'un agent Docker dédié (`python:3.11-slim`), pour éviter la complexité du Docker-in-Docker sur cette machine - voir la note sur l'agent Python dans `INSTALLATION_JENKINS.md`. |
 
 ## 3. Pourquoi Jenkins, ici (chapitre 4, partie 4)
 

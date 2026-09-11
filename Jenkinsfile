@@ -32,8 +32,8 @@ pipeline {
 
         stage('Installation des dépendances') {
             steps {
-                runCmd 'python -m pip install --upgrade pip'
-                runCmd 'pip install -r requirements-dev.txt'
+                runCmd 'python -m pip install --upgrade pip --break-system-packages'
+                runCmd 'pip install -r requirements-dev.txt --break-system-packages'
             }
         }
 
